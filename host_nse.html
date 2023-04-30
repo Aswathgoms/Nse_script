@@ -1,0 +1,40 @@
+<html>
+<head><title>Host Scanning</title></head>
+<body>
+<h2>HOST Discovery in nmap</h2>
+<P> It is a basic host detection script that checks whether a given host is up or down using UDP probes.</p>
+<h3>SCRIPT</h3>
+<Pre>
+local nmap = require "nmap"
+local socket = require "socket"
+
+description = "This is a sample NSE script"
+author = "GOMATHI NAYAGAM"
+categories = {"default", "discovery", "safe"}
+
+-- Define the NSE script rule
+hostrule = function(host)
+  local timeout = 5 
+  local s = socket.udp()
+  s:settimeout(timeout)
+   local result, err = s:sendto("", tostring(host), 1) 
+  if err == "timeout" then
+    return false -- Host is down
+  else
+    return true -- Host is up
+  end
+end
+
+action = function(host)
+  print("Host is " ..host.ip.. "Detecting.")
+end
+</Pre>
+
+<b>COMMAND:</b><h4>
+<pre>     To use this Script,Simply Run the following Command:
+          <b>nmap --SCRIPT</b> (script) <b>Target</b></pre></h4>
+<h4>OUTPUT</h4>
+<img src="D:\screenshot_1132.jpg">
+</pre>
+</body>
+</html>
